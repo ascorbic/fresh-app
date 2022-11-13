@@ -1,0 +1,6 @@
+[build]
+publish = "static"
+
+[[edge_functions]]
+path = "/*"
+function = "server"
