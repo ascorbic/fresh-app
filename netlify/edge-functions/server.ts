@@ -15,12 +15,14 @@ const ctx = await ServerContext.fromManifest(manifest, {
 const staticManifest = new Set(["/favicon.ico", "/logo.svg"]);
 
 const freshHandler = ctx.handler();
-(Deno.run as unknown) = undefined;
+// (Deno.run as unknown) = undefined;
 
 export default async function handler(request: Request, context: Context) {
+	if (!Deno.env.get("HOME")) {
+		Deno.env.set("HOME", "/tmp");
+	}
 	const requestURL = new URL(request.url);
 	const pathname = requestURL.pathname;
-	console.log("pathname", pathname);
 	if (staticManifest.has(pathname)) {
 		return;
 	}
